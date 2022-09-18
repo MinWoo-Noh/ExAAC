@@ -5,9 +5,17 @@ import androidx.lifecycle.*
 // count 를 저장하는 ViewModel
 class MyViewModel(
     _counter: Int,
+    private val repositoryImpl: MyRepositoryImpl,
 // 1. savedStateHandle 는 Key, Value 로 값을 받는다.
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
+
+    // 5. ViewModel 은 Repository 를 통해서만 Data를 다뤄야한한다. 그러므로 ViewModel 에서는 자시이 참고할 Repository 는 생성자로 받아야한다.
+    val counterFromRepository : LiveData<Int> = repositoryImpl.getCounter()
+
+    fun increaseCounter(){
+        repositoryImpl.increaseCounter()
+    }
 
     //    var counter : Int = _counter
     var counter = savedStateHandle.get<Int>(SAVE_STATE_KEY) ?: _counter

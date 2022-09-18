@@ -46,8 +46,10 @@ class MainActivity : AppCompatActivity() {
 //            binding.textView.text = myViewModel.counter.toString()
 //        }
 
+        val myRepositoryImpl = MyRepositoryImpl(10) // 5
+
         // 3. 팩토리 패턴을 통해 뷰모델에 초기값 적용
-        val factory = MyViewModelFactory(10, this)
+        val factory = MyViewModelFactory(10, myRepositoryImpl,this)
 //        val myViewModel = ViewModelProvider(this, factory).get(MyViewModel::class.java)
         // 위임작업
         val myViewModel by viewModels<MyViewModel>() {factory}
@@ -64,7 +66,8 @@ class MainActivity : AppCompatActivity() {
 //            myViewModel.counter += 1
 //            myViewModel.saveState()
 //            binding.textView.text = myViewModel.counter.toString()
-            myViewModel.liveCounter.value = myViewModel.liveCounter.value?.plus(1)
+//            myViewModel.liveCounter.value = myViewModel.liveCounter.value?.plus(1) // 4
+              myViewModel.increaseCounter()
         }
 
         // 라이브 데이터 옵저빙

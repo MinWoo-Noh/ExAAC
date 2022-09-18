@@ -17,11 +17,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_main)
-        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        val binding =
+            DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         // ViewBinding Code 주석처리
 //        setContentView(binding.root)
 
-        // 1.
+        // 1. 리셋되는 카운터 적용
 //        var count = 100
 //        binding.textView.text = count.toString()
 //
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 //            binding.textView.text = count.toString()
 
 
-        // 2.
+        // 2. ViewModel 적용
         // ViewModel count 사용
         // ViewModel 인스턴스를 그냥 생성하면 여러개 만드러지는 경우가 있을수 있기때문에
         // ViewModelProvider 을 통해 싱글톤으로 생성해준다.
@@ -45,15 +46,15 @@ class MainActivity : AppCompatActivity() {
 //            binding.textView.text = myViewModel.counter.toString()
 //        }
 
-        // 3.
-
-        val factory = MyViewModelFactory(100, this)
+        // 3. 팩토리 패턴을 통해 뷰모델에 초기값 적용
+        val factory = MyViewModelFactory(10, this)
 //        val myViewModel = ViewModelProvider(this, factory).get(MyViewModel::class.java)
-//          위임작업
+        // 위임작업
         val myViewModel by viewModels<MyViewModel>() {factory}
         /* ViewBinding Code 주석처리
         binding.textView.text = myViewModel.counter.toString()
            */
+        // 4. Data Binding
         // live data 를 관측하기위해서 lifecycleOwner(리싸이클오너)를 정해주고,
         binding.lifecycleOwner = this
         // xml 에 view 와 연동할 data 를 가지고 있는 ViewModel 을 지정을 해 준다.
